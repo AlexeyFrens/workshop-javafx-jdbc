@@ -11,4 +11,10 @@ module com.alexey.workshopjavafxjdbc {
     exports com.alexey.workshopjavafxjdbc.util;
 
     opens com.alexey.workshopjavafxjdbc.gui to javafx.fxml;
+
+    opens com.alexey.workshopjavafxjdbc.model.entities to javafx.fxml;
+    exports com.alexey.workshopjavafxjdbc.model.entities;
+
+    opens com.alexey.workshopjavafxjdbc.model.services to javafx.fxml;
+    exports com.alexey.workshopjavafxjdbc.model.services;
 }
