@@ -1,6 +1,7 @@
 package com.alexey.workshopjavafxjdbc;
 
 import com.alexey.workshopjavafxjdbc.model.services.DepartmentService;
+import com.alexey.workshopjavafxjdbc.model.services.SellerService;
 import com.alexey.workshopjavafxjdbc.util.Alerts;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +28,10 @@ public class HelloController {
 
     @FXML
     public void onMenuItemSellerAction() {
-        System.out.println("onMenuItemSellerAction");
+        loadView("gui/SellerList.fxml", (SellerListController controller) -> {
+            controller.setSellerService(new SellerService());
+            controller.updateTableView();
+        });
     }
 
     @FXML
