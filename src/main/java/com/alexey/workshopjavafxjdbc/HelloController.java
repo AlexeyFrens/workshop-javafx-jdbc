@@ -60,7 +60,7 @@ public class HelloController {
             initializingAction.accept(controller);
 
         } catch (IOException e) {
-            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
+            Alerts.showAlert("IO Exception", "Erro ao carregar página", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 }
