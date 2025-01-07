@@ -3,6 +3,7 @@ package com.alexey.workshopjavafxjdbc;
 import com.alexey.workshopjavafxjdbc.db.DbException;
 import com.alexey.workshopjavafxjdbc.listeners.DataChangeListener;
 import com.alexey.workshopjavafxjdbc.model.entities.Department;
+import com.alexey.workshopjavafxjdbc.model.exceptions.ValidationException;
 import com.alexey.workshopjavafxjdbc.model.services.DepartmentService;
 import com.alexey.workshopjavafxjdbc.util.Alerts;
 import com.alexey.workshopjavafxjdbc.util.Constraints;
@@ -16,9 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class DepartmentFormController implements Initializable {
 
@@ -68,6 +67,8 @@ public class DepartmentFormController implements Initializable {
             service.saveOrUpdate(entity);
             notifyDataChangeListeners();
             Utils.currentStage(event).close();
+        }catch (ValidationException e){
+            setErrorMessage(e.getErrors());
         }catch(DbException e){
             Alerts.showAlert("Erro ao salvar objeto", null, e.getMessage(), Alert.AlertType.ERROR);
         }
@@ -82,8 +83,18 @@ public class DepartmentFormController implements Initializable {
     private Department getFormData() {
         Department obj = new Department();
 
+        ValidationException exception = new ValidationException("Validation error");
+
         obj.setId(Utils.tryParseToInt(txtId.getText()));
+
+        if(txtName.getText() == null || txtName.getText().trim().isEmpty()){
+            exception.addError("name", "Field can't be empty");
+        }
         obj.setName(txtName.getText());
+
+        if(!exception.getErrors().isEmpty()){
+            throw exception;
+        }
 
         return obj;
     }
@@ -109,5 +120,13 @@ public class DepartmentFormController implements Initializable {
         }
         txtId.setText(String.valueOf(entity.getId()));
         txtName.setText(entity.getName());
+    }
+
+    private void setErrorMessage(Map<String, String> errors){
+        Set<String> fields = errors.keySet();
+
+        if(fields.contains("name")){
+            labelErrorName.setText(errors.get("name"));
+        }
     }
 }
