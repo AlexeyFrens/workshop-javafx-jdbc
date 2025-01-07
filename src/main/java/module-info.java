@@ -18,4 +18,7 @@ module com.alexey.workshopjavafxjdbc {
 
     opens com.alexey.workshopjavafxjdbc.model.services to javafx.fxml;
     exports com.alexey.workshopjavafxjdbc.model.services;
+
+    opens com.alexey.workshopjavafxjdbc.listeners to javafx.fxml;
+    exports com.alexey.workshopjavafxjdbc.listeners;
 }
