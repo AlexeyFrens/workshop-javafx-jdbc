@@ -104,8 +104,8 @@ public class DepartmentListController implements Initializable, DataChangeListen
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.showAndWait();
         }catch (IOException e){
-            Alerts.showAlert("IO Exception", "Erro ao carregar página", e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
+            Alerts.showAlert("IO Exception", "Erro ao carregar página", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 

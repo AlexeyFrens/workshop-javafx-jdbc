@@ -3,6 +3,7 @@ package com.alexey.workshopjavafxjdbc;
 import com.alexey.workshopjavafxjdbc.db.DbIntegrityException;
 import com.alexey.workshopjavafxjdbc.listeners.DataChangeListener;
 import com.alexey.workshopjavafxjdbc.model.entities.Seller;
+import com.alexey.workshopjavafxjdbc.model.services.DepartmentService;
 import com.alexey.workshopjavafxjdbc.model.services.SellerService;
 import com.alexey.workshopjavafxjdbc.util.Alerts;
 import com.alexey.workshopjavafxjdbc.util.Utils;
@@ -107,7 +108,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 
             SellerFormController controller = fxmlLoader.getController();
             controller.setEntity(obj);
-            controller.setService(service);
+            controller.setServices(new SellerService(), new DepartmentService());
+            controller.loadAssociatedObjects();
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();
 
@@ -119,8 +121,8 @@ public class SellerListController implements Initializable, DataChangeListener {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.showAndWait();
         }catch (IOException e){
-            Alerts.showAlert("IO Exception", "Erro ao carregar página", e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
+            Alerts.showAlert("IO Exception", "Erro ao carregar página", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
